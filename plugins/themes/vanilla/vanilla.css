@@ -1,8 +1,8 @@
 /**
  * plugins/themes/vanilla/vanilla.css
  *
- * Copyright (c) 2013-2019 Simon Fraser University
- * Copyright (c) 2003-2019 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2016 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Vanilla theme.
@@ -11,11 +11,14 @@
 
 body {
 	background-color: #ffffff;
+	background-image: url("/ojs/sample/plus3.png");
 	color: #000000;
 }
 
 a:link {
-	color: #000000;
+	color: #002241;
+	border-bottom: 0px solid rgba(0,0,0,.3);
+	padding-bottom: 0;
 }
 
 a:active {
@@ -23,16 +26,24 @@ a:active {
 }
 
 a:visited {
-	color: #808080;
+	color: #808090;
 }
 
 a:hover {
-	color: red;
+	color: #990000;
 	background: #ffffff;
+}
+
+a.icon img {
+	vertical-align:middle;
 }
 
 input.textField, select.selectMenu, textarea.textArea, input.uploadField {
 	background-color: #eeeeee;
+}
+
+form {
+	margin-top: 7px;
 }
 
 input.defaultButton {
@@ -40,39 +51,317 @@ input.defaultButton {
 	color: #ffffff;
 }
 
-#header {
-	background-color: #ffffff;
-	border-bottom: 1px solid black;
+#container {
+	width: auto !important;
+	max-width: 940px !important;
+	min-width: 616px !important;
+	padding: 0;
+	margin: 0px auto;
+	text-align:center;
+	background-color:#FFFFFF;
+	_height:100%;
+	min-height:100%;
+	overflow:hidden;
+}
+
+#body {
+    overflow: hidden;/* Makes #body contain its floated children */
+
+    /* Colours and borders for illustration purposes
+    border: solid 3px #666;
+    background: #ddd; */
 }
 
 #main {
-	background-color: #ffffff;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-bottom: 1px solid black;	
+	width: auto !important;
+	padding: 0;
+	margin: 0;
+	float: none;
+	display: block;
+    overflow: hidden;/* Make this div take up the rest of the horizontal space, and no more */
+
+    /* Colours and borders for illustration purposes
+    border: solid 3px #00c;
+    background: #ddf; */
+}
+
+#sidebar {
+    float: right;
+	width: 160px;
+	margin: 0;
+	margin-left: 5px;
+
+    /* Colours and borders for illustration purposes
+    border: solid 3px #c00;
+    background: #fdd; */
+}
+
+#top + #sidebar {
+	padding-top: 3em;
+}
+
+#rightSidebar {
+	width: auto;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#header {
+	border-bottom: 0px solid black;
+	background-color:#FFFFFF;
+}
+
+#header h1 {
+	padding: 0;
+	margin: 0;
+}
+
+#headerTitle h1 {
+	text-align:left;
+}
+
+#headerTitle h1 a:hover {
+	text-decoration:none;
+}
+
+#headerTitle h1 a img {
+	border: 0 none;
+}
+
+#footer {
+	background-color:#FFFFFF;
+}
+
+.footercontent p {
+	padding-top: 5px;
+	border-top: 1px solid #f1f1f1;
+}
+
+#rightSidebar a:hover {
+	color: #990000;
+	background: none;
 }
 
 #main h2 {
-	padding-left: 10px;
+	padding: 0;
+	margin: 26px 32px -10px 32px;
+	border-bottom: 1px solid #f1f1f1;
 }
 
-td.tocGalleys {
-	padding-right: 10px;
+#main h3 {
+	padding: 0;
+	margin: 15px 0 5px 0;
+}
+
+#articleTitle {
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+
+#articleAbstract p {
+	margin: 0;
+}
+
+table.tocArticle {
+	padding-top: 5px;
+}
+
+div.tocTitle {
+	padding-bottom: 5px;
+	text-transform: uppercase;
+}	
+
+div.tocGalleys {
+	vertical-align: middle;
+}
+
+div.tocGalleys a, a.file.PDF, a.action.PDF {
+	display:inline-block;
+	padding-right:20px;
+	line-height:18px;
+	background:transparent url(/ojs/sample/pdf.png) center right no-repeat;
+}
+
+div.tocAuthors {
+	padding-left: 24px !important;
+}
+
+div.tocPages {
+}
+
+
+table.data td {
+	padding: 5px 0 5px 0;
+}
+
+table.data td.instruct {
+	padding-top: 0;
+	margin-top: 0;
+}
+
+table.data td.value, table.data td.value label {
+	line-height: 23px;
+}
+
+table.data td.label {
+	padding-right: 1em;
+	padding-top: 0.8em;
+}
+
+table.info td {
+    padding: 0.3em 0.5em 0.6em 0;
+}
+
+table.listing td {
+    padding: 0.25em 1.5em 0.25em 0.5em;
 }
 
 #navbar {
-	padding-left: 10px;
-	border-bottom: 1px solid black;
+	padding: 0;
+	background-color: #F03F37;
+	width: 100%;
+	display: block;
+	float: left;
+	border: 0px solid black;
+}
+
+#navbar ul {
+	padding: 0;
+}	
+
+#navbar li {
+	float:left;
+	position:relative;
+	padding: 0;
+}
+
+#navbar a {
+	color:#ffffff;
+	display:block;
+	padding: 10px 12px;
+	margin: 0;
+	text-decoration:none;
+	font-weight: bold;
+	letter-spacing: 0px;
+}
+
+#navbar a:hover {
+	color:#ffffff;
+	display:block;
+	text-decoration:none;
+	background-color: #00a650;
 }
 
 #breadcrumb {
-	padding-left: 10px;
-	padding-bottom: 10px;
+	padding: 5px 12px 4px 12px;
+	margin-bottom: 12px;
+	background-color: #F8F8F8;
+	border-bottom: 1px solid #F8F8F8;	
+	clear: both;
+}
+
+#breadcrumb a:hover {
+	color: #000000;
+	background-color: #F8F8F8;
 	border-bottom: 1px solid black;	
 }
 
 #content {
-	padding-left: 10px;
+	padding: 16px 32px;;
 	border-top: 0px dotted #000;
 }
 
+#content p {
+    margin: 1em 0;
+    line-height: 1.6em;
+}
+
+#content li {
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+}
+
+#content ul {
+    margin: 0.5em 0 1em 0;
+    padding: 0 0 0 1.6em;
+}
+
+#content ol {
+	margin: 7px 0;
+}
+
+#content li.tagit-new {
+	padding: 3px;
+	margin: 6px;
+	border: 1px solid #777;
+}
+
+#pub-id\3A \3A doi { 
+	text-decoration: none;
+}
+
+#topBar {
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+}
+
+#articlePdfResizer {
+	height:800px;
+	width:100%;
+	padding: 0;
+}
+
+div.addthis_container {
+	margin-top: 20px;
+}
+
+div.license {
+/* licence code block is defined in /lib/pkp/locale/en_US/common.xml */
+	margin-top: 25px;
+	padding-left: 2px;
+}
+
+#commentsForEditor textarea {
+	width: 430px; 
+	height: 300px;
+}
+
+#custom.block p {
+	margin: 0.2em;
+}
+
+#custom.block a {
+	text-decoration: none;
+}
+
+#sidebar div.block {
+	padding: 5px;
+	margin-bottom: 0.5em;
+	background: #F8F8F8;
+}
+
+#sidebar ul {
+	margin-bottom: 0.25em;
+}
+
+#sidebar div.block span.blockTitle {
+	display: block;
+	padding: 0;
+	padding-bottom: 0.5em;
+	font-size: 1em;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+#sidebar form {
+	margin-top: 2px;
+}
+
+#sidebar div.block  br {
+	font-size: 1px;
+}
+
+#custom.block  {
+	background: #FFFFFF;
+}
