@@ -39,7 +39,7 @@
 	{if $authorMiddleName != ''}{assign var=authorName value="$authorName $authorMiddleName"}{/if}
 	{strip}
 		<a href="{url op="authors" path="view" firstName=$authorFirstName middleName=$authorMiddleName lastName=$authorLastName affiliation=$authorAffiliation country=$authorCountry}">{$authorName|escape}</a>
-		{if $authorAffiliation}, {$authorAffiliation|escape}{/if}
+<!--		{if $authorAffiliation}, {$authorAffiliation|escape}{/if} -->
 		{if $authorCountry} ({$author->getCountryLocalized()}){/if}
 	{/strip}
 	<br />

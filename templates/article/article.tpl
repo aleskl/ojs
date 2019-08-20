@@ -49,7 +49,7 @@
 	{if $article->getLocalizedAbstract()}
 		<div id="articleAbstract">
 		<h4>{translate key="article.abstract"}</h4>
-		<br />
+		
 		<div>{$article->getLocalizedAbstract()|strip_unsafe_html|nl2br}</div>
 		<br />
 		</div>
@@ -57,8 +57,7 @@
 
 	{if $article->getLocalizedSubject()}
 		<div id="articleSubject">
-		<h4>{translate key="article.subject"}</h4>
-		<br />
+		<h5>{translate key="article.subject"}</h5>
 		<div>{$article->getLocalizedSubject()|escape}</div>
 		<br />
 		</div>
@@ -74,8 +73,9 @@
 		<div id="articleFullText">
 		<h4>{translate key="reader.fullText"}</h4>
 		{if $hasAccess || ($subscriptionRequired && $showGalleyLinks)}
+			<div>
 			{foreach from=$article->getGalleys() item=galley name=galleyList}
-				<a href="{url page="article" op="view" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal)}" class="file" {if $galley->getRemoteURL()}target="_blank"{else}target="_parent"{/if}>{$galley->getGalleyLabel()|escape}</a>
+				<a href="{url page="article" op="view" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal)}" class="file {$galley->getGalleyLabel()|escape}">{$galley->getGalleyLabel()|escape}</a>
 				{if $subscriptionRequired && $showGalleyLinks && $restrictOnlyPdf}
 					{if $article->getAccessStatus() == $smarty.const.ARTICLE_ACCESS_OPEN || !$galley->isPdfGalley()}
 						<img class="accessLogo" src="{$baseUrl}/lib/pkp/templates/images/icons/fulltext_open_medium.gif" alt="{translate key="article.accessLogoOpen.altText"}" />
@@ -83,7 +83,10 @@
 						<img class="accessLogo" src="{$baseUrl}/lib/pkp/templates/images/icons/fulltext_restricted_medium.gif" alt="{translate key="article.accessLogoRestricted.altText"}" />
 					{/if}
 				{/if}
+				<br />
 			{/foreach}
+			</div>
+			<br />
 			{if $subscriptionRequired && $showGalleyLinks && !$restrictOnlyPdf}
 				{if $article->getAccessStatus() == $smarty.const.ARTICLE_ACCESS_OPEN}
 					<img class="accessLogo" src="{$baseUrl}/lib/pkp/templates/images/icons/fulltext_open_medium.gif" alt="{translate key="article.accessLogoOpen.altText"}" />
@@ -97,10 +100,23 @@
 		</div>
 	{/if}
 
+	{if $article->getSuppFiles()}
+		<div id="articleSuppFiles">
+		<h5>Supplementary files</h5>
+		<div>
+		{foreach from=$article->getSuppFiles() item=suppFile key=key}
+			{$key+1}. {$suppFile->getSuppFileTitle()|escape}&nbsp;&nbsp;&nbsp;
+				<a href="{url page="article" op="downloadSuppFile" path=$article->getBestArticleId()|to_array:$suppFile->getBestSuppFileId($currentJournal)}" class="action">{if $suppFile->isInlineable() || $suppFile->getRemoteURL()}{translate key="common.view"}{else}{translate key="common.download"}{/if}</a> {if !$suppFile->getRemoteURL()}({$suppFile->getNiceFileSize()}){/if}
+		{/foreach}
+		</div>
+		<br />
+		</div>
+	{/if}
+
+{** CITATION LIST DISABLED
 	{if $citationFactory->getCount()}
 		<div id="articleCitations">
 		<h4>{translate key="submission.citations"}</h4>
-		<br />
 		<div>
 			{iterate from=citationFactory item=citation}
 				<p>{$citation->getRawCitation()|strip_unsafe_html}</p>
@@ -109,6 +125,7 @@
 		<br />
 		</div>
 	{/if}
+*}
 {/if}
 
 {foreach from=$pubIdPlugins item=pubIdPlugin}
@@ -119,8 +136,7 @@
 	{/if}
 	{if $pubId}
 		<br />
-		<br />
-		{$pubIdPlugin->getPubIdDisplayType()|escape}: {if $pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}<a id="pub-id::{$pubIdPlugin->getPubIdType()|escape}" href="{$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}">{$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}</a>{else}{$pubId|escape}{/if}
+		{$pubIdPlugin->getPubIdDisplayType()|escape}: {if $pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}<a id="pub-id::{$pubIdPlugin->getPubIdType()|escape}" href="{$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}">{$pubId|escape}</a>{else}{$pubId|escape}{/if}
 	{/if}
 {/foreach}
 {if $galleys}

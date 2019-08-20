@@ -707,18 +707,19 @@ class SectionEditorSubmission extends Article {
 							strtotime($reviewAssignment->getDateNotified()) : 0;
 						$dateConfirmed = $reviewAssignment->getDateConfirmed() ?
 							strtotime($reviewAssignment->getDateConfirmed()) : 0;
+						$dateDue = $reviewAssignment->getDateDue() ?
+							strtotime($reviewAssignment->getDatedue()) : 0;
+						$inviteReminderDays = $journal->getSetting('numDaysBeforeInviteReminder');
 
 						// Check whether a reviewer is overdue to confirm invitation
 						if (!$reviewAssignment->getDateCompleted() &&
 							!$dateConfirmed &&
-							!$journal->getSetting('remindForInvite') &&
-							max($dateReminded, $dateNotified) + $overdueSeconds < time()
+							$dateNotified + 60 * 60 * 24 * $inviteReminderDays < time()
 						) return 'highlightReviewerConfirmationOverdue';
 						// Check whether a reviewer is overdue to complete review
 						if (!$reviewAssignment->getDateCompleted() &&
 							$dateConfirmed &&
-							!$journal->getSetting('remindForSubmit') &&
-							max($dateReminded, $dateConfirmed) + $overdueSeconds < time()
+							max($dateReminded, $dateConfirmed) > $dateDue
 						) return 'highlightReviewerCompletionOverdue';
 					}
 

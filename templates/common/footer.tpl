@@ -9,6 +9,7 @@
  *
  *}
 {strip}
+<div id="footer">
 {if $pageFooter==''}
 	{if $currentJournal && $currentJournal->getSetting('onlineIssn')}
 		{assign var=issn value=$currentJournal->getSetting('onlineIssn')}
@@ -21,4 +22,5 @@
 	{/if}
 {/if}
 {include file="core:common/footer.tpl"}
+</div>
 {/strip}

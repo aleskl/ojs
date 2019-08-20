@@ -56,7 +56,8 @@ function confirmSubmissionCheck() {
 			<td class="value">
 	{/if}
 			{assign var=emailString value=$editAssignment->getEditorFullName()|concat:" <":$editAssignment->getEditorEmail():">"}
-			{url|assign:"url" page="user" op="email" to=$emailString|to_array redirectUrl=$currentUrl subject=$submission->getLocalizedTitle()|strip_tags articleId=$articleId}
+			{assign var=emailSubject value="#"|concat:$submission->getId():" ":$submission->getLocalizedTitle()}
+			{url|assign:"url" page="user" op="email" to=$emailString|to_array redirectUrl=$currentUrl subject=$emailSubject articleId=$articleId}
 			{$editAssignment->getEditorFullName()|escape} {icon name="mail" url=$url}
 			{if !$editAssignment->getCanEdit() || !$editAssignment->getCanReview()}
 				{if $editAssignment->getCanEdit()}

@@ -93,6 +93,14 @@
 	</tr>
 	{/foreach}
 	<tr>
+		<td colspan="6">
+			{if $submission->getStatus() != STATUS_PUBLISHED && $submission->getStatus() != STATUS_ARCHIVED}
+				<a href="{url op="addSuppFile" path=$submission->getId()}" class="action">{translate key="submission.addSuppFile"}</a>
+			{else}
+				&nbsp;
+			{/if}</td>
+	</tr>
+	<tr>
 		<td colspan="6" class="separator">&nbsp;</td>
 	</tr>
 </table>

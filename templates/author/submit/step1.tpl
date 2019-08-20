@@ -166,8 +166,10 @@ function checkSubmissionChecklist() {
 
 <table width="100%" class="data">
 <tr valign="top">
-	<td width="20%" class="label">{fieldLabel name="commentsToEditor" key="author.submit.comments"}</td>
-	<td width="80%" class="value"><textarea name="commentsToEditor" id="commentsToEditor" rows="3" cols="40" class="textArea">{$commentsToEditor|escape}</textarea></td>
+	<td width="100%" class="label">{fieldLabel name="commentsToEditor" required="true" key="author.submit.comments"}</td>
+</tr>
+<tr valign="top">
+	<td width="100%" class="value"><textarea name="commentsToEditor" id="commentsToEditor" rows="3" cols="60" class="textArea">{$commentsToEditor|escape}</textarea></td>
 </tr>
 </table>
 </div>{* commentsForEditor *}

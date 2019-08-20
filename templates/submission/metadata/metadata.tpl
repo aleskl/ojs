@@ -24,7 +24,8 @@
 		<td width="20%" class="label">{translate key="user.name"}</td>
 		<td width="80%" class="value">
 			{assign var=emailString value=$author->getFullName()|concat:" <":$author->getEmail():">"}
-			{url|assign:"url" page="user" op="email" redirectUrl=$currentUrl to=$emailString|to_array subject=$submission->getLocalizedTitle()|strip_tags articleId=$submission->getId()}
+			{assign var=emailSubject value="#"|concat:$submission->getId():" ":$submission->getLocalizedTitle()}
+			{url|assign:"url" page="user" op="email" redirectUrl=$currentUrl to=$emailString|to_array subject=$emailSubject articleId=$submission->getId()}
 			{$author->getFullName()|escape} {icon name="mail" url=$url}
 		</td>
 	</tr>

@@ -298,12 +298,37 @@ class TrackSubmissionHandler extends AuthorHandler {
 		if ($authorSubmission->getStatus() != STATUS_PUBLISHED && $authorSubmission->getStatus() != STATUS_ARCHIVED) {
 			import('classes.submission.form.SuppFileForm');
 
+			$user =& $request->getUser();
 			$journal =& $request->getJournal();
 			$submitForm = new SuppFileForm($authorSubmission, $journal, $suppFileId);
 			$submitForm->readInputData();
 
 			if ($submitForm->validate()) {
 				$submitForm->execute();
+				import('classes.mail.ArticleMailTemplate');
+					$email = new ArticleMailTemplate($authorSubmission, 'SUPPLEMENTARY_FILE_NOTIFY', null, null, null, true, true);
+					$isEditor = false;
+					$assignedSectionEditors = $email->toAssignedEditingSectionEditors($authorSubmission->getId());
+					$editor = array_shift($assignedSectionEditors);
+					if (!$editor) {
+						$isEditor = true;
+						$assignedEditors = $email->toAssignedEditors($authorSubmission->getId());
+						$editor = array_shift($assignedEditors);
+					}
+					if (!$editor) {
+						$email->addRecipient($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
+						$editorName = $journal->getSetting('contactName');
+					} else {
+						$editorName = $editor->getEditorFullName();
+					}
+					$email->assignParams(array(
+						'editorialContactName' => $editorName,
+						'articleTitle' => $authorSubmission->getLocalizedTitle(),
+						'authorName' => $user->getFullName(),
+						'submissionUrl' => $request->url(null, $isEditor?'editor':'sectionEditor', 'submissionReview', $authorSubmission->getId()),
+						'editorialContactSignature' => $journal->getSetting('contactName') . "\n" . $journal->getLocalizedTitle()
+					));
+					$email->send($request);
 				$request->redirect(null, null, 'submission', $articleId);
 			} else {
 				$submitForm->display();
